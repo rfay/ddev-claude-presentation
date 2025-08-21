@@ -445,3 +445,26 @@
         display: none;
     }
 }
+
+/* Alignment fixes: Left-align markdown blockquotes, code blocks, lists, and paragraphs within slides */
+.reveal .slides section blockquote,
+.reveal .slides section pre,
+.reveal .slides section ul,
+.reveal .slides section ol,
+.reveal .slides section li,
+.reveal .slides section p {
+  text-align: left !important;
+}
+
+/* Ensure list indentation feels natural when left-aligned */
+.reveal .slides section ul,
+.reveal .slides section ol {
+  display: block !important;
+  margin-left: 1.5em;
+  padding-left: 0.5em;
+}
+
+/* Keep blockquotes flush-left without extra unintended indentation */
+.reveal .slides section blockquote {
+  margin-left: 0;
+}
