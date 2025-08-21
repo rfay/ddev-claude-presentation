@@ -15,29 +15,49 @@
 
 ## Table of Contents
 
-<!-- Use smaller print for this slide -->
-<span style="font-size: 0.85em">
+<div style="font-size: 0.9em; line-height: 1.6;">
 
-1. **Introduction & Overview**
-2. **Setup & Configuration**
-3. **Technical Workflows**
-4. **Live Demonstrations**
-5. **Best Practices**
-6. **Q&A & Resources**
+1. **Introduction & Overview**  
+   *Setting the context for AI-assisted DDEV development*
 
-</span>
+2. **About Claude Code**  
+   *Understanding Claude Code capabilities and limitations*
+
+3. **Setup & Configuration**  
+   *Getting started with DDEV and Claude Code integration*
+
+4. **Technical Workflows**  
+   *Navigation, discovery, and development patterns*
+
+5. **Live Demonstrations**  
+   *Real DDEV issues and AI-assisted solutions*
+
+6. **Best Practices**  
+   *Code quality, testing, and prompt engineering*
+
+7. **Q&A & Resources**  
+   *Discussion and follow-up materials*
+
+</div>
 
 ---
 
-**Start recording and captions:** Don't forget
-**Navigation Tips:** Use arrow keys, 'o' for overview, 's' for speaker notes  
-**Presenter Notes Available:** Press 's' to open speaker view with detailed timing and delivery guidance
+## Presentation Setup
+
+**📹 Recording:** Don't forget to start recording and captions
+
+**🔍 Navigation Tips:**
+- Use arrow keys to navigate slides
+- Press `o` for overview mode
+- Press `s` for speaker notes
+
+**📝 Presenter Notes:** Available in speaker view with detailed timing and delivery guidance
 
 ---
 
 ## Introduction & Overview
 
-Note: Section 1 of 6 - Setting the context for AI-assisted DDEV development
+Note: Section 1 of 7 - Setting the context for AI-assisted DDEV development
 
 --
 
@@ -52,11 +72,14 @@ Note: Section 1 of 6 - Setting the context for AI-assisted DDEV development
 
 ---
 
-### About Claude Code
+## About Claude Code
 
-#### Capabilities
+Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
 
-**Claude Code Capabilities:**
+--
+
+### Capabilities
+
 - **AI pair programming assistant** with deep code understanding
 - **Context-aware analysis** of large codebases and complex architectures  
 - **Conversation-based workflow** for iterative development
@@ -90,7 +113,7 @@ Note: Section 1 of 6 - Setting the context for AI-assisted DDEV development
 
 ## Setup & Configuration
 
-Note: Section 2 of 6 - Getting Claude Code ready for DDEV development
+Note: Section 3 of 7 - Getting Claude Code ready for DDEV development
 
 --
 
@@ -117,9 +140,11 @@ Note: Section 2 of 6 - Getting Claude Code ready for DDEV development
 - DDEV has a CLAUDE.md with basic instructions, you may need to adapt (but it's not very obedient)
 - Static analysis and tests are a great way to keep Claude "on the rails"
 
-
+---
 
 ## Technical Workflows
+
+Note: Section 4 of 7 - Navigation, discovery, and development patterns
 
 --
 
@@ -210,7 +235,7 @@ if err := app.ValidateConfig(); err != nil {
 }
 ```
 
-`"How does DDEV handle logging?`
+`How does DDEV handle logging?`
 
 ```go
 // DDEV logging pattern:
@@ -255,9 +280,11 @@ func cmdStart(cmd *cobra.Command, args []string) error {
 
 🔧 **AI Development Tip:** Always ask Claude to "follow DDEV patterns" when generating new code
 
---
+---
 
 ## Live Demonstrations
+
+Note: Section 5 of 7 - Real-world application of Claude Code with DDEV
 
 --
 
@@ -340,7 +367,7 @@ func cmdStart(cmd *cobra.Command, args []string) error {
 
 ## Best Practices
 
-Note: Section 5 of 6 - Guidelines for effective AI-assisted development
+Note: Section 6 of 7 - Guidelines for effective AI-assisted development
 
 --
 
@@ -441,40 +468,36 @@ func TestDdevApp_GetConfigPath(t *testing.T) {
 #### Crafting Effective Prompts for Development
 
 **🎯 Be Specific About Requirements**
-```
-❌ Vague: "Fix this function"
-✅ Specific: "Fix this function to handle MySQL 8.0 authentication, 
-   following DDEV's error handling patterns and including unit tests"
 
-❌ Unclear: "Make this better"  
-✅ Clear: "Refactor this function to use DDEV's logging utilities 
-   and improve error messages for users". Use the pattern found in ...
-```
+❌ **Vague:** "Fix this function"
+
+✅ **Specific:** "Fix this function to handle MySQL 8.0 authentication, following DDEV's error handling patterns and including unit tests"
+
+❌ **Unclear:** "Make this better"  
+
+✅ **Clear:** "Refactor this function to use DDEV's logging utilities and improve error messages for users. Use the pattern found in..."
 
 --
 
 **📋 Provide Context About DDEV**
-```
-🏗️ Structure Context:
-"This is part of DDEV's container management system. DDEV uses 
-docker-compose to orchestrate containers. Follow existing patterns 
-in pkg/ddevapp for container lifecycle management."
 
-🧪 Testing Context:
-"Generate tests following DDEV's testing patterns. Use testify/require, 
-include both positive and negative test cases, and follow the existing 
-test file structure in this directory."
-```
+**🏗️ Structure Context:**
+> "This is part of DDEV's container management system. DDEV uses docker-compose to orchestrate containers. Follow existing patterns in pkg/ddevapp for container lifecycle management."
+
+---
+
+**🧪 Testing Context:**
+> "Generate tests following DDEV's testing patterns. Use testify/require, include both positive and negative test cases, and follow the existing test file structure in this directory."
 
 --
 
 **🔄 Iterate and Refine**
-```
-1️⃣ First attempt: "Add error handling to this function"
-2️⃣ Refined: "Add DDEV-style error handling with proper error wrapping"
-3️⃣ Specific: "Add error handling that wraps errors with context and 
-    uses DDEV's util.Error() for user-facing messages"
-```
+
+**1️⃣ First attempt:** "Add error handling to this function"
+
+**2️⃣ Refined:** "Add DDEV-style error handling with proper error wrapping"
+
+**3️⃣ Specific:** "Add error handling that wraps errors with context and uses DDEV's util.Error() for user-facing messages"
 
 --
 
@@ -488,6 +511,8 @@ test file structure in this directory."
 
 ## Q&A & Resources
 
+Note: Section 7 of 7 - Discussion and follow-up materials
+
 --
 
 ### Key Takeaways
@@ -497,7 +522,6 @@ test file structure in this directory."
 - **Incremental adoption** is the best approach
 
 ---
-
 
 **📚 Resources & Follow-up**
 
@@ -509,7 +533,8 @@ test file structure in this directory."
 
 **Training Materials:**
 - **Claude Code Class at Coursera:** [coursera.org/learn/claude-code](https://www.coursera.org/learn/claude-code)
---
+
+---
 
 ### Thank You!
 
