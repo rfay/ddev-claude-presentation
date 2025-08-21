@@ -7,9 +7,16 @@
 
 ---
 
-**Presented by:** Randy Fay, DDEV Lead Maintainer  
+## Presentation Setup
 
-🎯 **Goal:** Learn practical techniques for using Claude Code to enhance DDEV development workflows
+**📹 Recording:** Don't forget to start recording and captions
+
+**🔍 Navigation Tips:**
+- Use arrow keys to navigate slides
+- Press `o` for overview mode
+- Press `s` for speaker notes
+
+**📝 Presenter Notes:** Available in speaker view with detailed timing and delivery guidance
 
 ---
 
@@ -42,19 +49,6 @@
 
 ---
 
-## Presentation Setup
-
-**📹 Recording:** Don't forget to start recording and captions
-
-**🔍 Navigation Tips:**
-- Use arrow keys to navigate slides
-- Press `o` for overview mode
-- Press `s` for speaker notes
-
-**📝 Presenter Notes:** Available in speaker view with detailed timing and delivery guidance
-
----
-
 ## Introduction & Overview
 
 Note: Section 1 of 7 - Setting the context for AI-assisted DDEV development
@@ -80,11 +74,11 @@ Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
 
 ### Capabilities
 
-- **AI pair programming assistant** with deep code understanding
-- **Context-aware analysis** of large codebases and complex architectures  
+- **AI pair programming assistant** and it can do things (that you allow) on your system
+- **Context-aware analysis** of large codebases and complex architectures and even adapt to existing style
 - **Conversation-based workflow** for iterative development
-- **Multi-language expertise** with particularly strong Go, Python, and JavaScript support
-- **Real-time assistance** for coding, debugging, testing, and documentation
+- **Multi-language expertise** 
+- **Real-time assistance/collaboration** for coding, debugging, testing, and documentation
 
 --
 
@@ -93,7 +87,7 @@ Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
 - **Pattern recognition** in existing codebases
 - **Code generation** following established conventions
 - **Test creation** with comprehensive edge case coverage
-- **Documentation writing** in multiple formats
+- **Documentation writing** in multiple formats (questionable)
 - **Debugging assistance** with error analysis and solutions
 
 --
@@ -124,7 +118,7 @@ Note: Section 3 of 7 - Getting Claude Code ready for DDEV development
 - Git and GitHub CLI (optional but recommended)
 - Claude Code installed and working 
 - Claude Code/Anthropic account
-- Basic Go knowledge helpful
+- Basic Go and DDEV architecture knowledge
 
 ---
 
@@ -153,26 +147,6 @@ Note: Section 4 of 7 - Navigation, discovery, and development patterns
 #### Understanding DDEV's Architecture
 
 `Explain DDEV's project structure and architecture`
-
-```
-ddev/
-├── cmd/ddev/                // Main CLI entry point and command definitions
-│   ├── cmd/                 // Individual command implementations  
-│   │   ├── start.go        // `ddev start` command
-│   │   ├── config.go       // `ddev config` command
-│   │   └── ...             // Other commands
-├── pkg/                     // Core functionality packages
-│   ├── ddevapp/            // Main application logic
-│   ├── dockerutil/         // Docker operations
-│   ├── globalconfig/       // Global configuration
-│   └── util/               // Utility functions
-├── containers/              // Docker container definitions
-│   ├── ddev-webserver/     // Web server container
-│   ├── ddev-dbserver/      // Database containers
-│   └── ddev-router/        // Traefik router container
-├── docs/                    // User and developer documentation
-└── tests/                   // Test suites (Go unit tests + Bats integration tests)
-```
 
 --
 
@@ -417,7 +391,7 @@ func goodExample() error {
 
 #### AI-Powered Test Generation
 
-**✨ AI Excels at Test Creation**
+**✨ AI is Great at Test Creation**
 ```go
 // Prompt: "Generate comprehensive tests for this DDEV function"
 func TestDdevApp_GetConfigPath(t *testing.T) {
@@ -526,10 +500,10 @@ Note: Section 7 of 7 - Discussion and follow-up materials
 **📚 Resources & Follow-up**
 
 **Essential Documentation:**
-- **DDEV Documentation:** [ddev.readthedocs.io](https://ddev.readthedocs.io)
+- **DDEV Docs:** [ddev.readthedocs.io](https://ddev.readthedocs.io)
 - **Claude Code Docs:** [docs.anthropic.com/claude-code](https://docs.anthropic.com/claude-code)
 - **DDEV GitHub:** [github.com/ddev/ddev](https://github.com/ddev/ddev)
-- **Community Slack:** [ddev.com/slack](https://ddev.com/slack)
+- **Contact us:** [Contacts and Discord](https://ddev.com/contact/)
 
 **Training Materials:**
 - **Claude Code Class at Coursera:** [coursera.org/learn/claude-code](https://www.coursera.org/learn/claude-code)
