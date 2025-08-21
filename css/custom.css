@@ -188,6 +188,13 @@
     object-fit: contain;
 }
 
+/* Ensure logo centering on title slide */
+.reveal .slides section:first-child .ddev-logo {
+    margin: 20px auto !important;
+    display: block !important;
+    text-align: center !important;
+}
+
 .ddev-logo-small {
     max-height: 60px;
     margin: 10px;
@@ -446,25 +453,50 @@
     }
 }
 
-/* Alignment fixes: Left-align markdown blockquotes, code blocks, lists, and paragraphs within slides */
-.reveal .slides section blockquote,
-.reveal .slides section pre,
-.reveal .slides section ul,
-.reveal .slides section ol,
-.reveal .slides section li,
-.reveal .slides section p {
-  text-align: left !important;
+/* Base alignment: Keep headings centered, but left-align body content */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+    text-align: center;
+}
+
+/* Left-align body content in non-title slides */
+.reveal .slides section:not(.title-slide) blockquote,
+.reveal .slides section:not(.title-slide) pre,
+.reveal .slides section:not(.title-slide) ul,
+.reveal .slides section:not(.title-slide) ol,
+.reveal .slides section:not(.title-slide) li,
+.reveal .slides section:not(.title-slide) p {
+    text-align: left !important;
+}
+
+/* Title slide: keep everything centered */
+.reveal .slides section:first-child h1,
+.reveal .slides section:first-child h2,
+.reveal .slides section:first-child p,
+.reveal .slides section:first-child strong,
+.reveal .slides section:first-child .ddev-logo {
+    text-align: center !important;
 }
 
 /* Ensure list indentation feels natural when left-aligned */
-.reveal .slides section ul,
-.reveal .slides section ol {
-  display: block !important;
-  margin-left: 1.5em;
-  padding-left: 0.5em;
+.reveal .slides section:not(.title-slide) ul,
+.reveal .slides section:not(.title-slide) ol {
+    display: block !important;
+    margin-left: 1.5em;
+    padding-left: 0.5em;
 }
 
 /* Keep blockquotes flush-left without extra unintended indentation */
-.reveal .slides section blockquote {
-  margin-left: 0;
+.reveal .slides section:not(.title-slide) blockquote {
+    margin-left: 0;
+}
+
+/* Special handling for spans and inline elements on title slide */
+.reveal .slides section:first-child span {
+    text-align: center !important;
+    display: block;
 }

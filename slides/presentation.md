@@ -75,12 +75,12 @@ Note: Section 1 of 6 - Setting the context for AI-assisted DDEV development
 
 --
 
-#### Current Limitations
+#### Claude Limitations
 
 - **Context windows** - works best with focused, specific tasks  
 - **Knowledge cutoff** - may not know about very recent changes
 - **Hallucination risk** - always verify generated code
-- **Limited time usage**
+- **Limited time usage** - they shut you off after unclear time, and you don't get to start again until later
 
 --
 
@@ -105,9 +105,21 @@ Note: Section 2 of 6 - Getting Claude Code ready for DDEV development
 
 ---
 
-## Technical Workflows
+### Basic Benefits
 
-Note: Section 3 of 6 - Core development workflows with AI assistance
+- Claude gives you a real chance to describe a problem or feature in careful detail, letting you think about and design the problem in advance. Use that, it helps you! And then it helps Claude.
+- Being able to take on a problem using Claude has me far more willing to start on something I don't completely understand.
+- For more complex problems or features, describe the solution to Claude in detail and ask it to write a PRD.
+- Use git commits to keep track of where you are and be able to revert if things go bad. You can have Claude make commits with detailed messages.
+- I've been very happy with these organizational principles.
+
+### Strategies to Get The Most Value
+- DDEV has a CLAUDE.md with basic instructions, you may need to adapt (but it's not very obedient)
+- Static analysis and tests are a great way to keep Claude "on the rails"
+
+
+
+## Technical Workflows
 
 --
 
@@ -115,8 +127,7 @@ Note: Section 3 of 6 - Core development workflows with AI assistance
 
 #### Understanding DDEV's Architecture
 
-**Ask Claude Code:**  
-> Explain DDEV's project structure and architecture
+`Explain DDEV's project structure and architecture`
 
 ```
 ddev/
@@ -143,28 +154,17 @@ ddev/
 #### Advanced Navigation Techniques
 
 **Start with the Entry Point:**  
-> Claude Code prompt: "Show me the main() function and how DDEV processes commands"  
+`Show me the main() function and how DDEV processes commands`
+
 This reveals `cmd/ddev/main.go` and the Cobra command structure.
 
 --
 
 **Follow the Data Flow:**  
-> Claude Code prompt: "Trace the execution from 'ddev start' to container creation"  
+`Trace the execution from 'ddev start' to container creation`
+
 Response should show: `cmd/start.go` → `pkg/ddevapp/ddevapp.go` → Docker operations
 
---
-
-**Understanding Key Interfaces:**  
-> Ask Claude Code: "Explain the Provider interface and its implementations"
-
-```go
-type Provider interface {
-    GetType() string
-    GetConfigPath() string  
-    Validate() error
-    // Shows how different hosting providers are abstracted
-}
-```
 
 ---
 
@@ -173,13 +173,12 @@ type Provider interface {
 #### Finding Implementation Details
 
 **Command Implementation Pattern:**  
-> Where is the ddev start command implemented?  
+`Where is the ddev start command implemented?`
+
 `cmd/ddev/cmd/start.go` → `pkg/ddevapp/ddevapp.Start()`
 
-> How does DDEV detect project type?  
-`pkg/ddevapp/config.go` → `DetectAppType()` function
+`Show me container lifecycle management`
 
-> Show me container lifecycle management  
 `pkg/ddevapp/ddevapp.go` → Docker operations
 
 --
@@ -187,17 +186,22 @@ type Provider interface {
 #### Dependency Analysis
 
 **System Relationships:**  
-> Show me all packages that import dockerutil  
-> Find functions that create Docker containers  
-> Explain how configuration flows through the system  
-> Map the relationship between DdevApp and container management
+
+`Show me all packages that import dockerutil`
+
+`Find functions that create Docker containers`
+
+`Explain how configuration flows through the system`
+
+`Map the relationship between DdevApp and container management`
 
 --
 
 #### Pattern Recognition
 
 **DDEV Conventions:**  
-> Ask Claude Code: "Show me DDEV's error handling patterns"
+
+`Show me DDEV's error handling patterns`
 
 ```go
 // Standard DDEV error pattern:
@@ -206,7 +210,7 @@ if err := app.ValidateConfig(); err != nil {
 }
 ```
 
-> Ask Claude Code: "How does DDEV handle logging consistently?"
+`"How does DDEV handle logging?`
 
 ```go
 // DDEV logging pattern:
@@ -215,7 +219,7 @@ util.Success("Successfully started %s", app.Name)
 util.Failed("Failed to start %s: %v", app.Name, err)
 ```
 
-💡 **Navigation Strategy:** Always start with "Explain the architecture" then drill down to specific components
+💡 **Navigation Strategy:** Start with "Explain the architecture" then drill down to specific components
 
 --
 
@@ -224,7 +228,9 @@ util.Failed("Failed to start %s: %v", app.Name, err)
 #### DDEV-Specific Architecture Patterns
 
 **1. Command Pattern Implementation:**  
-> Ask Claude Code: "Show me how DDEV implements the command pattern"  
+
+`Show me how DDEV implements the command pattern`
+
 Every DDEV command follows this structure:
 
 ```go
@@ -246,90 +252,12 @@ func cmdStart(cmd *cobra.Command, args []string) error {
 
 --
 
-**2. Application State Management:**  
-> Ask Claude Code: "Explain DDEV's application state pattern"
-
-```go
-type DdevApp struct {
-    Name          string
-    Type          string
-    PHPVersion    string
-    WebImage      string
-    ConfigPath    string
-    // State is immutable once created, modified through methods
-}
-
-// State transitions are explicit and validated
-func (app *DdevApp) Start() error {
-    if app.Status == ddevapp.SiteRunning {
-        return fmt.Errorf("app %s is already running", app.Name)
-    }
-    // State change logic with validation
-}
-```
-
---
-
-**3. Provider Pattern for Extensibility:**  
-> Ask Claude Code: "How does DDEV use the provider pattern?"
-
-```go
-type Provider interface {
-    GetType() string
-    GetConfigPath() string
-    Validate() error
-    Write(configPath string) error
-}
-
-// Implementation for different hosting providers
-type PlatformshProvider struct {
-    app *DdevApp
-}
-func (p *PlatformshProvider) GetType() string { return "platform.sh" }
-```
-
----
-
-#### Error Handling Patterns
-**DDEV's Consistent Error Strategy:**
-```go
-// Ask Claude Code: "Generate DDEV-style error handling for this function"
-
-// Before: Basic error handling
-func StartContainers() error {
-    if err := dockerutil.ComposeUp(); err != nil {
-        return err
-    }
-}
-
-// After: DDEV-style error handling with context
-func (app *DdevApp) StartContainers() error {
-    util.Debug("Starting containers for project %s", app.Name)
-    
-    if err := app.ValidateContainerConfig(); err != nil {
-        return fmt.Errorf("container configuration invalid for %s: %w", app.Name, err)
-    }
-    
-    if err := dockerutil.ComposeUp(app.GetComposeFiles()...); err != nil {
-        return fmt.Errorf("failed to start containers for %s: %w", app.Name, err)
-    }
-    
-    util.Success("Containers started successfully for %s", app.Name)
-    return nil
-}
-```
 
 🔧 **AI Development Tip:** Always ask Claude to "follow DDEV patterns" when generating new code
 
 --
 
-### Let's Try It Out!
-
----
-
 ## Live Demonstrations
-
-Note: Section 4 of 6 - Working through real GitHub issues
 
 --
 
@@ -351,63 +279,62 @@ Note: Section 4 of 6 - Working through real GitHub issues
 
 - Introduce Claude to [GitHub Issue #7424](https://github.com/ddev/ddev/issues/7424)
 
-`Read https://github.com/ddev/ddev/issues/7424 and explain the problem with `ddev launch` and FrankenPHP.`
+`Read https://github.com/ddev/ddev/issues/7424 and describe the problem with `ddev launch` and FrankenPHP.`
 
 --
 
 #### Step 2: Reproduce the Bug
 
-Prompt to Claude:  
-`How can I reproduce the bug described in https://github.com/ddev/ddev/issues/7424 using a fresh DDEV project and the FrankenPHP add-on?`
+`Build the HEAD code with make`
+
+`Create a new trivial project in ~/tmp/launch-bug`
+
+`Add the FrankenPHP add-on with ddev add-on get https://github.com/stasadev/ddev-frankenphp`
+
+`ddev launch`
+
 
 --
 
 #### Step 3: Analyze and Identify the Root Cause
 
-- Analyze the error message from the failed launch
-- Ask Claude to read and explain the launch command code (a bash custom command)
-- Prompt:  
-  > "Analyze the error output and the launch custom command. What is causing the failure with FrankenPHP?"
+`Analyze the error message from the failed launch`
+
+`Analyze the error output and the launch custom command. What is causing the failure with FrankenPHP?`
 
 --
 
 #### Step 4: Implement and Test the Fix
 
-- Ask Claude to suggest a fix based on the analysis and the issue discussion
-- Implement the fix as suggested
-- Test the solution to confirm the bug is resolved
-- Prompt:  
-  > "Propose and explain a fix for the FrankenPHP launch issue, and describe how to test it."
+`fix the problem with the launch command`
 
 --
 
-### Demo 2: Add-on Dependencies
-#### GitHub Issue #5337
+### Demo 2: Allow add-ons to download other add-ons, Issue #5337
 
 **Problem:** Allow add-ons to download other add-ons as dependencies
 
 **AI-Assisted Approach:**
-- Analyze existing add-on system
-- Design dependency resolution
-- Implement recursive installation
-- Create comprehensive tests
 
-Note: This demonstrates AI-assisted feature development from conception to completion.
+`Read https://github.com/ddev/ddev/issues/5337` and explain the goal and any involved complexities`
+
+`What would the steps be to solve this problem?`
+
+`What are the risks of implementing this feature?`
+
+`Propose a solution`
+
 
 --
 
-### Demo 3: Xdebug Enhancement
-#### GitHub Issue #7537
+### Demo 3: `host.docker.internal` handling for all containers, Issue #7537
 
-**Problem:** Better `host.docker.internal` handling for Xdebug
+**Problem:** Better `host.docker.internal` handling for all containers
 
-**AI-Assisted Approach:**
-- Understand container networking
-- Research cross-platform solutions
-- Implement improved detection
-- Test across environments
-
-Note: This demonstrates AI assistance with complex system-level programming.
+- Explain to Claude what `host.docker.internal` is and how it's used in web container
+- Explain why it might be useful in other containers (like a FrankenPHP container)
+- Explain where it's currently defined in app_compose_template.yaml
+- Get Claude to propose a solution
 
 ---
 
@@ -561,8 +488,6 @@ test file structure in this directory."
 
 ## Q&A & Resources
 
-Note: Section 6 of 6 - Questions, answers, and follow-up resources
-
 --
 
 ### Key Takeaways
@@ -573,28 +498,6 @@ Note: Section 6 of 6 - Questions, answers, and follow-up resources
 
 ---
 
-### Exercise Materials & Templates
-
-**1. Navigation Deep Dive (30 minutes)**
-- Explore DDEV's testing framework architecture
-- Practice with different types of DDEV providers
-- Map out the database service implementation
-
---
-
-**2. Advanced Code Review (45 minutes)**
-- Review a complete pull request with Claude Code
-- Compare AI suggestions with actual DDEV maintainer feedback
-- Practice the full review cycle: analysis → suggestions → improvement
-
---
-
-**3. Real Issue Practice (60 minutes)**
-- Choose an interesting DDEV GitHub issue
-- Work through the complete development cycle
-- Submit your solution approach for community feedback
-
---
 
 **📚 Resources & Follow-up**
 
@@ -604,23 +507,8 @@ Note: Section 6 of 6 - Questions, answers, and follow-up resources
 - **DDEV GitHub:** [github.com/ddev/ddev](https://github.com/ddev/ddev)
 - **Community Slack:** [ddev.com/slack](https://ddev.com/slack)
 
---
-
-**Advanced Learning:**
-- **DDEV Architecture Guide:** Understanding the codebase structure
-- **Go Development Patterns:** Best practices for Go development
-- **AI-Assisted Development Blog:** [blog.ddev.com/ai-development](https://blog.ddev.com)
-- **Monthly DDEV Office Hours:** Ask questions and share experiences
-
---
-
-**Community Resources:**
-- **DDEV Contributor Guide:** Step-by-step contribution process
-- **AI Development Discussion:** Join the #ai-tools channel in DDEV Slack
-- **Office Hours Calendar:** [ddev.com/events](https://ddev.com/events)
-
-Note: Provide comprehensive resources for continued learning. Mention that exercise materials will be made available after the presentation.
-
+**Training Materials:**
+- **Claude Code Class at Coursera:** [coursera.org/learn/claude-code](https://www.coursera.org/learn/claude-code)
 --
 
 ### Thank You!
