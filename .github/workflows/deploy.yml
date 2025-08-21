@@ -38,10 +38,13 @@ jobs:
     - name: Build presentation
       run: |
         # Copy all files needed for the presentation
-        mkdir -p _site
+        mkdir -p _site/node_modules
+        # Disable Jekyll processing on GitHub Pages
+        touch _site/.nojekyll
         cp index.html _site/
         cp -r slides _site/
         cp -r css _site/
+        cp -r images _site/
         cp -r node_modules/reveal.js _site/node_modules/
         
     - name: Upload artifact
