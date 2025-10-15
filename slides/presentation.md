@@ -7,19 +7,6 @@
 
 ---
 
-## Presentation Setup
-
-**📹 Recording:** Don't forget to start recording and captions
-
-**🔍 Navigation Tips:**
-- Use arrow keys to navigate slides
-- Press `o` for overview mode
-- Press `s` for speaker notes
-
-**📝 Presenter Notes:** Available in speaker view with detailed timing and delivery guidance
-
----
-
 ## Table of Contents
 
 <div style="font-size: 0.9em; line-height: 1.6;">
@@ -66,12 +53,6 @@ Note: Section 1 of 7 - Setting the context for AI-assisted DDEV development
 
 ---
 
-## About Claude Code
-
-Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
-
---
-
 ### Capabilities
 
 - **AI pair programming assistant** and it can do things (that you allow) on your system
@@ -80,7 +61,7 @@ Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
 - **Multi-language expertise** 
 - **Real-time assistance/collaboration** for coding, debugging, testing, and documentation
 
---
+---
 
 #### Key Strengths
 
@@ -90,7 +71,7 @@ Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
 - **Documentation writing** in multiple formats (questionable)
 - **Debugging assistance** with error analysis and solutions
 
---
+---
 
 #### Claude Limitations
 
@@ -99,17 +80,8 @@ Note: Section 2 of 7 - Understanding Claude Code capabilities and limitations
 - **Hallucination risk** - always verify generated code
 - **Limited time usage** - they shut you off after unclear time, and you don't get to start again until later
 
---
-
-🤖 **Key Principle:** Claude Code enhances human developers - it doesn't replace critical thinking and domain expertise
-
 ---
 
-## Setup & Configuration
-
-Note: Section 3 of 7 - Getting Claude Code ready for DDEV development
-
---
 
 ### Getting Started
 
@@ -260,84 +232,41 @@ func cmdStart(cmd *cobra.Command, args []string) error {
 
 Note: Section 5 of 7 - Real-world application of Claude Code with DDEV
 
---
+---
 
 ### Demo Overview
 
-**Three real DDEV issues:**
+**Let's work on a real DDEV issue:**
 
-1. **Issue #7424:** [FrankenPHP launch error](https://github.com/ddev/ddev/issues/7424)
-2. **Issue #5337:** [Add-on dependency management](https://github.com/ddev/ddev/issues/5337)
-3. **Issue #7537:** [Xdebug host resolution](https://github.com/ddev/ddev/issues/7537)
+Gitpod "classic" unfortunately is no more as of today, so can be removed from the codebase. 
 
-**Each demo shows:** Problem analysis → Solution design → Implementation → Testing
+**[Issue 6891](https://github.com/ddev/ddev/issues/6891)**
 
---
+Explains about the process of removing it.
 
-### Demo 1: FrankenPHP `ddev launch` problem, Issue #7424
-
-#### Step 1: Prompt Claude to Explain the Issue
-
-- Introduce Claude to [GitHub Issue #7424](https://github.com/ddev/ddev/issues/7424)
-
-`Read https://github.com/ddev/ddev/issues/7424 and describe the problem with `ddev launch` and FrankenPHP.`
-
---
-
-#### Step 2: Reproduce the Bug
-
-`Build the HEAD code with make`
-
-`Create a new trivial project in ~/tmp/launch-bug`
-
-`Add the FrankenPHP add-on with ddev add-on get https://github.com/stasadev/ddev-frankenphp`
-
-`ddev launch`
-
-
---
-
-#### Step 3: Analyze and Identify the Root Cause
-
-`Analyze the error message from the failed launch`
-
-`Analyze the error output and the launch custom command. What is causing the failure with FrankenPHP?`
-
---
-
-#### Step 4: Implement and Test the Fix
-
-`fix the problem with the launch command`
-
---
-
-### Demo 2: Allow add-ons to download other add-ons, Issue #5337
-
-**Problem:** Allow add-ons to download other add-ons as dependencies
-
-**AI-Assisted Approach:**
-
-`Read https://github.com/ddev/ddev/issues/5337` and explain the goal and any involved complexities`
-
-`What would the steps be to solve this problem?`
-
-`What are the risks of implementing this feature?`
-
-`Propose a solution`
-
-
---
-
-### Demo 3: `host.docker.internal` handling for all containers, Issue #7537
-
-**Problem:** Better `host.docker.internal` handling for all containers
-
-- Explain to Claude what `host.docker.internal` is and how it's used in web container
-- Explain why it might be useful in other containers (like a FrankenPHP container)
-- Explain where it's currently defined in app_compose_template.yaml
-- Get Claude to propose a solution
 
 ---
+
+#### Prompt Claude to Explain the Issue
+
+- Introduce Claude to [GitHub Issue #6891](https://github.com/ddev/ddev/issues/6891)
+
+`Read https://github.com/ddev/ddev/issues/6891 and describe the problem in detail`
+
+`Review the DDEV codebase and explain what things need to change to accomplish this. There are docs, Gitpod configuration files, and go code that adjusts for the use of Gitpod.`
+
+`Make a plan to remove these items separately in a separate commit for each topic.`
+
+
+
+---
+
+#### Walk Claude through the process
+
+Review each step. Consider letting claude continue without permissions on each item.
+
+---
+
 
 ## Best Practices
 
